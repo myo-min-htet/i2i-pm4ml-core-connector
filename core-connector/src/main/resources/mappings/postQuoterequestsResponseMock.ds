@@ -1,0 +1,14 @@
+{
+  "quoteId": payload.ilpPacket.quoteId,
+  "transactionId": payload.ilpPacket.transactionId,
+  "transferAmount": payload.transferAmount.amount,
+  "transferAmountCurrency": payload.transferAmount.currency,
+  "payeeFspFeeAmount": "0",
+  "payeeFspFeeAmountCurrency": payload.transferAmount.currency,
+  "payeeFspCommissionAmount": "0",
+  "payeeFspCommissionAmountCurrency": payload.transferAmount.currency,
+  [if (std.objectHas(payload, "expiration") && payload.expiration != null)
+   then "expiration"]: payload.expiration,
+  [if (std.objectHas(payload, "extensionList") && (payload.extensionList != null) && (payload.extensionList != []))
+   then "extensionList"]: payload.extensionList
+}

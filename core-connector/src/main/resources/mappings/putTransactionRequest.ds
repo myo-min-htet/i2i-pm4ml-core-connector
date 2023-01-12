@@ -1,0 +1,42 @@
+{
+     "transaction": {
+          "senderReference": payload.transferId,
+          "amount": ds.util.parseDouble(payload.quote.request.amount.amount),
+          "purpose": "1001",
+          "receiverType": "INDIVIDUAL",
+          "remarks": "i2i",
+          "callbackURL": "https://yoursite.domain.ph/callback"
+     },
+     "sender": {
+               "accountName": "UNIONBANK",
+               "accountNumber": "109490561",
+               "mobileNumber": "+639481987702",
+               "email": cml.exchangeProperty("payeremail"),
+               "address": "123 Leo St.",
+               "barangay": "Masikap",
+               "city": "Manila",
+               "zipCode": "1008"
+          },
+    "receiver": {
+    "bank": {
+        "name": "Banco De Oro Unibank, Inc.",
+        "code": "161312"
+    },
+    "accountName": cml.exchangeProperty("name"),
+    "accountNumber": cml.exchangeProperty("AccountNumber"),
+    "receiverGender": "Male",
+    "mobileNumber": cml.exchangeProperty("phone"),
+    "email": cml.exchangeProperty("email"),
+    "city": "Pasig",
+    "barangay": "Maharlika",
+    "zipCode": "1110",
+    "address": "45 Subdivision",
+    "gender": "Male"
+    },
+     "representative": {
+          "firstName": "Myo",
+          "middleName": "Min",
+          "lastName": "Htet",
+          "suffix": "Mr."
+     }
+}

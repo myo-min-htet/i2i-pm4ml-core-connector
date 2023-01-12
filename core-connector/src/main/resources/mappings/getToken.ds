@@ -1,0 +1,4 @@
+{
+    "username": cml.properties("dfsp.username"),
+    "password": cml.properties("dfsp.password")
+}

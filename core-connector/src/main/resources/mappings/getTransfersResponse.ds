@@ -1,0 +1,5 @@
+{
+  "transferId": payload.transferId,
+  "transferState": payload.fulfil.body.transferState,
+  "completedTimestamp": payload.fulfil.body.completedTimestamp
+}
