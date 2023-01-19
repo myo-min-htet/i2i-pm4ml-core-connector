@@ -174,6 +174,7 @@ public class TransfersRouter extends RouteBuilder {
                         .to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
                                 "'Transfer current state COMPLETED, PUT /transfers/${header.transferId}', " +
                                 "null, null, null)")
+
                         .toD("direct:getAuthHeader")
                         .setProperty("data",simple("{{dfsp.dataMap}}"))
                         .setProperty("phone",simple("${body['quote']['request']['payee']['partyIdInfo']['partyIdentifier']}"))
@@ -181,7 +182,8 @@ public class TransfersRouter extends RouteBuilder {
                         .setProperty("name",method(util.class, "getMapData(${exchangeProperty.phone}, name, ${exchangeProperty.data})"))
                         .setProperty("email",method(util.class, "getMapData(${exchangeProperty.phone}, email, ${exchangeProperty.data})"))
                         .setProperty("payeremail",method(util.class, "getMapData(${exchangeProperty.phone}, payeremail, ${exchangeProperty.data})"))
-
+                        .setProperty("bankName",method(util.class, "getMapData(${exchangeProperty.phone}, bankName, ${exchangeProperty.data})"))
+                        .setProperty("bankCode",method(util.class, "getMapData(${exchangeProperty.phone}, bankCode, ${exchangeProperty.data})"))
                         .removeHeaders("CamelHttp*")
                         .setHeader("Content-Type", constant("application/json"))
                         .marshal().json()
@@ -204,11 +206,11 @@ public class TransfersRouter extends RouteBuilder {
                 .endDoTry()
 
                 .choice()
-                    .when(simple("${body['StatusCode']} != 201"))
+                    .when(simple("${body['status']} != 'SUCCESS'"))
                         .to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
                                 "'CBS did not return 201 for, PUT /transfers/${header.transferId}', " +
                                 "null, null, 'Output payload: ${body}')")
-                            .to("direct:catchCBSError")
+                        .to("direct:catchCBSError")
                     .otherwise()
                         .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(200))
                         .to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
@@ -252,22 +254,8 @@ public class TransfersRouter extends RouteBuilder {
                     .toD("{{dfsp.host}}/api-apic/instapay?senderReference=${exchangeProperty.senderReferenceID}")
                     .unmarshal().json(JsonLibrary.Gson)
                     .log("Checking body : ${body}")
-                .end() // end loop
-                .choice()
-                    .when(simple("${body['status']} == 'SUCCESS'"))
-                        .marshal().json()
-                        .transform(datasonnet("resource:classpath:mappings/putTransfersResponse.ds"))
-                        .marshal().json()
-                        .to("bean:customJsonMessage?method=logJsonMessage(" +
-                                "'info', " +
-                                "${header.X-CorrelationId}, " +
-                                "'Response success status', " +
-                                "'Tracking the request', " +
-                                "'Call the check instaPay status method, Track the response', " +
-                                "'Input Payload: ${body}')")
-                    .otherwise()
-                        .to("direct:catchCBSError")
                 .end()
+                
                 /*
                  * END processing
                  */

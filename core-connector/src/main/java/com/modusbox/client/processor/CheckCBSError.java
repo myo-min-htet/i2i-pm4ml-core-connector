@@ -10,9 +10,10 @@ import org.apache.camel.Processor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
-
+@Component("CheckCBSError")
 public class CheckCBSError implements Processor {
 
     public void process(Exchange exchange) throws Exception {
