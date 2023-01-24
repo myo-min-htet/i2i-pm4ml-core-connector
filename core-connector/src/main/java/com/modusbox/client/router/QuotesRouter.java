@@ -56,6 +56,8 @@ public class QuotesRouter extends RouteBuilder {
 				.setHeader("Accept", constant("application/json"))
 				.setHeader(Exchange.HTTP_METHOD, constant("GET"))
 				.setProperty("quoteId",simple("${body['quoteId']}"))
+				.setProperty("amount",simple("${body['amount']}"))
+				.setProperty("currency",simple("${body['currency']}"))
 				.toD("{{dfsp.mockhost}}/payment/quotes/${exchangeProperty.quoteId}")
 //				.marshal().json()
 				.transform(datasonnet("resource:classpath:mappings/postQuoterequestsResponseMock.ds"))

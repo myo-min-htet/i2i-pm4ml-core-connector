@@ -255,7 +255,7 @@ public class TransfersRouter extends RouteBuilder {
                     .unmarshal().json(JsonLibrary.Gson)
                     .log("Checking body : ${body}")
                 .end()
-                
+
                 /*
                  * END processing
                  */

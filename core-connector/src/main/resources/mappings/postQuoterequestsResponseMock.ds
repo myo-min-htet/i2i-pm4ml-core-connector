@@ -1,12 +1,12 @@
 {
   "quoteId": payload.ilpPacket.quoteId,
   "transactionId": payload.ilpPacket.transactionId,
-  "transferAmount": payload.transferAmount.amount,
-  "transferAmountCurrency": payload.transferAmount.currency,
+  "transferAmount": cml.exchangeProperty("amount"),
+  "transferAmountCurrency": cml.exchangeProperty("currency"),
   "payeeFspFeeAmount": "0",
-  "payeeFspFeeAmountCurrency": payload.transferAmount.currency,
+  "payeeFspFeeAmountCurrency": cml.exchangeProperty("currency"),
   "payeeFspCommissionAmount": "0",
-  "payeeFspCommissionAmountCurrency": payload.transferAmount.currency,
+  "payeeFspCommissionAmountCurrency": cml.exchangeProperty("currency"),
   [if (std.objectHas(payload, "expiration") && payload.expiration != null)
    then "expiration"]: payload.expiration,
   [if (std.objectHas(payload, "extensionList") && (payload.extensionList != null) && (payload.extensionList != []))
