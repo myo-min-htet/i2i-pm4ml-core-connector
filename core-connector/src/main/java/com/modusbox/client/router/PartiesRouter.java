@@ -69,7 +69,7 @@ public class PartiesRouter extends RouteBuilder {
 				.to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
 						"'Calling backend API, getParties', " +
 						"'Tracking the request', 'Track the response', " +
-						"'Request sent to, GET https://i2i.crossborderpayment.ubx.ph/payment/resolve/${header.idValue}')")
+						"'Request sent to, GET {{dfsp.mockhost}}/payment/resolve/${header.idValue}')")
 				.toD("{{dfsp.mockhost}}/payment/resolve/${header.idValue}")
 				.unmarshal().json(JsonLibrary.Gson)
 
