@@ -10,9 +10,9 @@
      "sender": {
         "accountName": "UBX Philippines",
         "accountNumber": "1001001001",
-        "mobileNumber": if std.length(payload.quote.request.payee.partyIdInfo.partyIdentifier) > 9
-         then "+639" + std.substr(payload.quote.request.payee.partyIdInfo.partyIdentifier, std.length(payload.quote.request.payee.partyIdInfo.partyIdentifier)-9, std.length(payload.quote.request.payee.partyIdInfo.partyIdentifier))
-         else "+639" + payload.quote.request.payee.partyIdInfo.partyIdentifier,
+        "mobileNumber": if std.length(payload.quote.request.payer.partyIdInfo.partyIdentifier) > 9
+         then "+639" + std.substr(payload.quote.request.payer.partyIdInfo.partyIdentifier, std.length(payload.quote.request.payer.partyIdInfo.partyIdentifier)-9, std.length(payload.quote.request.payer.partyIdInfo.partyIdentifier))
+         else "+639" + payload.quote.request.payer.partyIdInfo.partyIdentifier,
         "email": cml.exchangeProperty("payeremail"),
         "address": "123 Leo St.",
         "barangay": "Masikap",
