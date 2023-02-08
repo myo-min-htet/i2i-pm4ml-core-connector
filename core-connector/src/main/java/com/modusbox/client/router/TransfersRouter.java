@@ -193,7 +193,7 @@ public class TransfersRouter extends RouteBuilder {
                         .to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
                                 "'Calling i2i API, PUT transfers, at: {{dfsp.host}}/api-apic/instapay/process', " +
                                 "'Tracking the request', 'Track the response', 'Input Payload: ${body}')")
-                        .toD("{{dfsp.host}}/api-apic/instapay/process?bridgeEndpoint=true&throwExceptionOnFailure=false")
+                        .toD("{{dfsp.host}}/api-apic/instapay/process/direct?bridgeEndpoint=true&throwExceptionOnFailure=false")
                         .unmarshal().json(JsonLibrary.Gson)
                         .to("bean:customJsonMessage?method=logJsonMessage('info', ${header.X-CorrelationId}, " +
                             "'Response from backend API, putTransfers: ${body}', " +
