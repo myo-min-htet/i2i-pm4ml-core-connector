@@ -39,8 +39,8 @@
 {
     "idType": cml.header('idType'),
     "idValue": cml.header('idValue'),
-    "lastName": payload.recipientName,
-    "displayName": payload.recipientName,
+    "lastName": cml.exchangeProperty("name"),
+    "displayName": cml.exchangeProperty("name"),
     "extensionList": [
         {
             "key": "walletName",

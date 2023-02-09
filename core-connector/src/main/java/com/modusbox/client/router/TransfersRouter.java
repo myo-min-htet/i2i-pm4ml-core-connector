@@ -251,7 +251,7 @@ public class TransfersRouter extends RouteBuilder {
                 .log("Original body : ${body}")
                 .setProperty("senderReferenceID",simple("${body['senderReference']}"))
                 .//loopDoWhile(simple("${body['status']} == 'SENT FOR PROCESSING' || ${body['status']} == 'SENT FOR CONFIRMATION' || ${body['status']} == 'FOR CHECKING' || ${body['status']} == 'PROCESSING'"))
-                loopDoWhile(simple("${body['status']} != 'SUCCESS' || ${body['status']} != 'FAILED' "))
+                loopDoWhile(simple("${body['status']} == 'SENT FOR PROCESSING' || ${body['status']} == 'SENT FOR CONFIRMATION' || ${body['status']} == 'FOR CHECKING' || ${body['status']} == 'PROCESSING' ${body['status']} == 'CREATED' ${body['status']} == 'PROCESSING'"))
                     .toD("{{dfsp.host}}/api-apic/instapay?senderReference=${exchangeProperty.senderReferenceID}")
                     .unmarshal().json(JsonLibrary.Gson)
                     .log("Checking body : ${body}")
